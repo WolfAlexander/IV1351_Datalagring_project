@@ -11,15 +11,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class Controller {
     private Stage prmStage;
     private DatabaseHandler dbHandler;
     @FXML ListView<String> productTypesListView;
     @FXML ChoiceBox<String> productTypesChoiceBox;
     @FXML ListView<String> brandsListView;
-    private ObservableList<String> productTypes;
 
     /**
      * Controller constructor
@@ -52,13 +49,14 @@ public class Controller {
 
     @FXML
     public void showAllProductTypes(){
-        ObservableList<String> databaseChoices = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
-        productTypesListView.setItems(databaseChoices);
+        ObservableList<String> allProductTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
+        productTypesListView.setItems(allProductTypes);
     }
 
     @FXML
     public void showAllBrandsByProductType(){
-
+        ObservableList<String> brands = FXCollections.observableArrayList(dbHandler.getBrandsByProductType(productTypesChoiceBox.getValue()));
+        brandsListView.setItems(brands);
     }
 
     @FXML
@@ -67,7 +65,7 @@ public class Controller {
     }
 
     @FXML private void initialize(){
-        productTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
+        ObservableList<String> productTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
         productTypesChoiceBox.setItems(productTypes);
         productTypesChoiceBox.setValue(productTypes.get(0));
     }

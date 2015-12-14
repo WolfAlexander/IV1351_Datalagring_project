@@ -34,7 +34,7 @@ public class DatabaseHandler {
                 productTypes.add(rs.getString("namn"));
 
             statement.close();
-        }catch(SQLException ex){
+        }catch (SQLException ex){
             ex.printStackTrace();
         }
 
@@ -42,6 +42,27 @@ public class DatabaseHandler {
     }
 
     public ArrayList<String> getBrandsByProductType(String productType){
-        return null;
+        ArrayList<String> brands = new ArrayList<String>();
+        String query = "SELECT DISTINCT Marke.namn\n" +
+                "         FROM Marke , ProduktTyp, Paket, Produkt\n" +
+                "         WHERE ProduktTyp.namn = ?\n" +
+                "         AND Produkt.produktTyp = ProduktTyp.produktTypID\n" +
+                "         AND Paket.produkt = Produkt.namn\n" +
+                "         AND Paket.marke = Marke.markeID";
+
+        try{
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, productType);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next())
+                brands.add(rs.getString("namn"));
+
+            statement.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return brands;
     }
 }
