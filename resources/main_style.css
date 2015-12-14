@@ -1,0 +1,54 @@
+.root{
+    -fx-pref-width: 800;
+    -fx-pref-height: 520;
+    -fx-background-color:
+            radial-gradient(center 50% -10%, radius 200%, #ffa600 45%, white 50%);
+}
+
+.text-field{
+    -fx-max-width: 400;
+    -fx-border-insets: 5;
+}
+
+.label{
+    -fx-font-size: 12pt;
+}
+
+.button{
+    -fx-background-color:
+            #090a0b,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 10pt;
+    -fx-padding: 10 50 10 50;
+    -fx-cursor: hand;
+}
+
+.button:pressed{
+    -fx-background-color:
+            #fbf6ff,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#9c9d99, #9c9d99),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 10pt;
+    -fx-padding: 10 50 10 50;
+    -fx-cursor: hand;
+}
+
+
+.specialButton{
+    -fx-padding: 4 5 4 5;
+}

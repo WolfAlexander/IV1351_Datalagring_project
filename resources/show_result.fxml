@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="800.0" stylesheets="@main_style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Show all product types">
+               <content>
+                  <HBox>
+                     <children>
+                        <VBox alignment="CENTER" prefWidth="250.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#showAllProductTypes" text="Show all product types" />
+                           </children>
+                        </VBox>
+                        <ListView fx:id="productTypesListView" prefHeight="491.0" prefWidth="550.0" />
+                     </children>
+                  </HBox>
+               </content>
+          </Tab>
+            <Tab text="Show all brands by product type">
+               <content>
+                  <HBox>
+                     <children>
+                        <VBox alignment="CENTER" prefWidth="250.0">
+                           <children>
+                              <ChoiceBox fx:id="productTypesChoiceBox" prefWidth="150.0" />
+                              <Button mnemonicParsing="false" onAction="#showAllBrandsByProductType" text="Show brands" />
+                           </children>
+                        </VBox>
+                        <ListView fx:id="brandsListView" prefHeight="491.0" prefWidth="550.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </Tab>
+            <Tab text="Add new customer">
+               <content>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Personnummer" />
+                        <TextField />
+                        <Label text="Förnamn" />
+                        <TextField />
+                        <Label text="Förnamn" />
+                        <TextField />
+                        <Label text="Efternamn" />
+                        <TextField />
+                        <Label text="Gatuadress" />
+                        <TextField />
+                        <Label text="Postort" />
+                        <TextField />
+                        <Label text="Postnummer" />
+                        <TextField />
+                        <Label text="Telefon" />
+                        <TextField />
+                        <Label text="Email" />
+                        <TextField />
+                        <Button mnemonicParsing="false" text="Registrera" />
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>
