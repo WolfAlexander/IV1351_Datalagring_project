@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import net.ucanaccess.jdbc.UcanaccessSQLException;
 
 import java.sql.SQLException;
 
@@ -56,6 +57,7 @@ public class Controller {
         }
     }
 
+
     @FXML
     public void showAllProductTypes(){
         ObservableList<String> allProductTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
@@ -71,14 +73,16 @@ public class Controller {
     @FXML
     public void addNewCustomer(){
         UserData userData = new UserData(pnr.getText(), fnamn.getText(), enamn.getText(),
-                gadress.getText(), postort.getText(), postnr.getText(), telefon.getText(), email.getText());
-        try{
-            if(dbHandler.registerNewUser(userData))
+                gadress.getText(), postort.getText(), Integer.parseInt(postnr.getText()), telefon.getText(), email.getText());
+        try {
+            if (dbHandler.registerNewUser(userData))
                 messageToUser.setText("New user is successfully registered!");
             else
                 messageToUser.setText("No");
-        }catch(SQLException ex){
+        }catch(UcanaccessSQLException ex){
             ex.printStackTrace();
+            messageToUser.setText("Your input is incorrect - it does not match database requirements!");
+        }catch(SQLException ex) {
             messageToUser.setText("Unable to register user right now! Try again!");
         }catch (IllegalArgumentException argEx){
             messageToUser.setText(argEx.getMessage());

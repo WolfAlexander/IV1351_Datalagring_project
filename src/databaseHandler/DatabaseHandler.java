@@ -1,6 +1,7 @@
 package databaseHandler;
 
 import DTO.UserData;
+import net.ucanaccess.jdbc.UcanaccessSQLException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -85,30 +86,29 @@ public class DatabaseHandler {
      * This method inserts new user into database
      * @param userData is user information of type DTO.UserData
      * @return boolean true if user is successfully added
-     * @throws SQLException
+     * @throws SQLException if an something wrong happend
      * @throws IllegalArgumentException
+     * @throws UcanaccessSQLException
      */
-    public boolean registerNewUser(UserData userData) throws SQLException, IllegalArgumentException{
-        /*String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr) " +
+    public boolean registerNewUser(UserData userData) throws SQLException, IllegalArgumentException, UcanaccessSQLException{
+        String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr) " +
                 "VALUES( ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement statement = con.prepareStatement(query);*/
-        Statement statement = con.createStatement();
-        /*statement.setString(1, userData.getPnr());
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setString(1, userData.getPnr());
         statement.setString(2, userData.getFnamn());
         statement.setString(3, userData.getEnamn());
         statement.setString(4, userData.getGadress());
         statement.setString(5, userData.getPostort());
-        statement.setString(6, userData.getPostnr());*/
+        statement.setInt(6, userData.getPostnr());
 
-        boolean rs = statement.execute("INSERT INTO Medlem (pnr, fnamn, enamn, gaddress, postOrt, postNr) VALUES( '194707116818', 'Test', 'Testsson', 'Testvägen 42', 'Testinge', 23812)");
-
+        int rs = statement.executeUpdate();
+        con.commit();
         statement.close();
-        //con.commit();
-        /*if(rs >= 1)
-            return true;*/
-        return rs;
 
+        if(rs >= 1)
+            return true;
+        return false;
     }
 
     /**
@@ -133,6 +133,11 @@ public class DatabaseHandler {
         return stores;
     }
 
+    /**
+     * This method gets product's name, size, unit and amount of the product in specific store
+     * @param store is given store name
+     * @return list of productinformation
+     */
     public ArrayList<String> getProductsInfoByStore(String store){
         ArrayList<String> productsInfo = new ArrayList<String>();
         String query = "SELECT Paket.produkt, Paket.storlek, Enhet.namn, PaketStatus.antal\n" +
@@ -149,7 +154,7 @@ public class DatabaseHandler {
             ResultSet rs = statement.executeQuery();
 
             while(rs.next())
-                productsInfo.add(rs.getString("produkt")+ " " + rs.getString("storlek") + " " + rs.getString("namn") + " has current amount " + rs.getString("antal"));
+                productsInfo.add(rs.getString("produkt") + " " + rs.getString("storlek").replace("E0", "") + " " + rs.getString("namn") + " has current amount " + rs.getString("antal"));
 
             statement.close();
         }catch (SQLException ex){
