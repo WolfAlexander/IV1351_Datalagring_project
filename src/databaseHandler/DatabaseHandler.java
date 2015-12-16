@@ -1,5 +1,7 @@
 package databaseHandler;
 
+import DTO.UserData;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -10,6 +12,10 @@ public class DatabaseHandler {
     private String userID = "";
     private String password = "";
 
+    /**
+     * This method connects to database
+     * @return boolean true if connection established, else false
+     */
     public boolean connect(){
         try{
             Class.forName(driver);
@@ -22,6 +28,10 @@ public class DatabaseHandler {
         return true;
     }
 
+    /**
+     * This method gets list of product type in db
+     * @return list of product types
+     */
     public ArrayList<String> getAllProductTypes(){
         ArrayList<String> productTypes = new ArrayList<String>();
         String query = "SELECT namn FROM ProduktTyp";
@@ -41,6 +51,11 @@ public class DatabaseHandler {
         return productTypes;
     }
 
+    /**
+     * This method get productbrands for a specific product type
+     * @param productType is given product type
+     * @return list of brands
+     */
     public ArrayList<String> getBrandsByProductType(String productType){
         ArrayList<String> brands = new ArrayList<String>();
         String query = "SELECT DISTINCT Marke.namn\n" +
@@ -64,5 +79,83 @@ public class DatabaseHandler {
         }
 
         return brands;
+    }
+
+    /**
+     * This method inserts new user into database
+     * @param userData is user information of type DTO.UserData
+     * @return boolean true if user is successfully added
+     * @throws SQLException
+     * @throws IllegalArgumentException
+     */
+    public boolean registerNewUser(UserData userData) throws SQLException, IllegalArgumentException{
+        /*String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr) " +
+                "VALUES( ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement statement = con.prepareStatement(query);*/
+        Statement statement = con.createStatement();
+        /*statement.setString(1, userData.getPnr());
+        statement.setString(2, userData.getFnamn());
+        statement.setString(3, userData.getEnamn());
+        statement.setString(4, userData.getGadress());
+        statement.setString(5, userData.getPostort());
+        statement.setString(6, userData.getPostnr());*/
+
+        boolean rs = statement.execute("INSERT INTO Medlem (pnr, fnamn, enamn, gaddress, postOrt, postNr) VALUES( '194707116818', 'Test', 'Testsson', 'Testvägen 42', 'Testinge', 23812)");
+
+        statement.close();
+        //con.commit();
+        /*if(rs >= 1)
+            return true;*/
+        return rs;
+
+    }
+
+    /**
+     * This method gets list of stores in db
+     * @return list of stores
+     */
+    public ArrayList<String> getAllStores(){
+        ArrayList<String> stores = new ArrayList<String>();
+        String query = "SELECT namn FROM Butik";
+
+        try{
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next())
+                stores.add(rs.getString("namn"));
+
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return stores;
+    }
+
+    public ArrayList<String> getProductsInfoByStore(String store){
+        ArrayList<String> productsInfo = new ArrayList<String>();
+        String query = "SELECT Paket.produkt, Paket.storlek, Enhet.namn, PaketStatus.antal\n" +
+                "FROM Paket, Butik, PaketStatus, Produkt, Enhet\n" +
+                "WHERE Butik.namn = ?\n" +
+                "AND Butik.butikID = PaketStatus.butik\n" +
+                "AND PaketStatus.paket = Paket.streckkod\n" +
+                "AND Paket.produkt = Produkt.namn\n" +
+                "AND Enhet.enhetID = Produkt.enhet";
+
+        try{
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, store);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next())
+                productsInfo.add(rs.getString("produkt")+ " " + rs.getString("storlek") + " " + rs.getString("namn") + " has current amount " + rs.getString("antal"));
+
+            statement.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+        return productsInfo;
     }
 }

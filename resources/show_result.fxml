@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="800.0" stylesheets="@main_style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" stylesheets="@main_style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -42,29 +42,46 @@
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Personnummer" />
-                        <TextField />
+                        <TextField fx:id="pnr" />
                         <Label text="Förnamn" />
-                        <TextField />
-                        <Label text="Förnamn" />
-                        <TextField />
+                        <TextField fx:id="fnamn" />
                         <Label text="Efternamn" />
-                        <TextField />
+                        <TextField fx:id="enamn" />
                         <Label text="Gatuadress" />
-                        <TextField />
+                        <TextField fx:id="gadress" />
                         <Label text="Postort" />
-                        <TextField />
+                        <TextField fx:id="postort" />
                         <Label text="Postnummer" />
-                        <TextField />
+                        <TextField fx:id="postnr" />
                         <Label text="Telefon" />
-                        <TextField />
+                        <TextField fx:id="telefon" />
                         <Label text="Email" />
-                        <TextField />
-                        <Button mnemonicParsing="false" text="Registrera" />
+                        <TextField fx:id="email" />
+                        <Button mnemonicParsing="false" onAction="#addNewCustomer" text="Registrera" />
                      </children>
                   </VBox>
                </content>
             </Tab>
+            <Tab text="Products in store">
+               <content>
+                  <HBox>
+                     <children>
+                        <VBox alignment="CENTER" prefWidth="250.0">
+                           <children>
+                              <ChoiceBox fx:id="storesChoiceBox" prefWidth="150.0" />
+                              <Button mnemonicParsing="false" onAction="#showProductsByStore" text="Show products" />
+                           </children>
+                        </VBox>
+                        <ListView fx:id="productsInStore" prefHeight="491.0" prefWidth="550.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
+      <HBox prefHeight="50.0" prefWidth="800.0">
+         <children>
+            <Label fx:id="messageToUser" />
+         </children></HBox>
    </children>
 </VBox>

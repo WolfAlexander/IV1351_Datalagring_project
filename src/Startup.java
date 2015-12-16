@@ -17,6 +17,8 @@ public class Startup extends Application{
         contr.setPrmStage(prmStage);
         contr.launchView();
         prmStage.setTitle("Project - Datalagring");
+        prmStage.setMaxWidth(800);
+        prmStage.setMaxHeight(550);
         prmStage.show();
     }
 }

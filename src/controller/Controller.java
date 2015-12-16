@@ -1,5 +1,6 @@
 package controller;
 
+import DTO.UserData;
 import databaseHandler.DatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,8 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class Controller {
     private Stage prmStage;
@@ -17,6 +22,10 @@ public class Controller {
     @FXML ListView<String> productTypesListView;
     @FXML ChoiceBox<String> productTypesChoiceBox;
     @FXML ListView<String> brandsListView;
+    @FXML TextField pnr, fnamn, enamn, gadress, postort, postnr, telefon, email;
+    @FXML ListView<String> productsInStore;
+    @FXML ChoiceBox<String> storesChoiceBox;
+    @FXML Label messageToUser;
 
     /**
      * Controller constructor
@@ -61,12 +70,35 @@ public class Controller {
 
     @FXML
     public void addNewCustomer(){
+        UserData userData = new UserData(pnr.getText(), fnamn.getText(), enamn.getText(),
+                gadress.getText(), postort.getText(), postnr.getText(), telefon.getText(), email.getText());
+        try{
+            if(dbHandler.registerNewUser(userData))
+                messageToUser.setText("New user is successfully registered!");
+            else
+                messageToUser.setText("No");
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            messageToUser.setText("Unable to register user right now! Try again!");
+        }catch (IllegalArgumentException argEx){
+            messageToUser.setText(argEx.getMessage());
+        }
+    }
 
+    @FXML
+    public void showProductsByStore(){
+        ObservableList<String> productsInfo = FXCollections.observableArrayList(dbHandler.getProductsInfoByStore(storesChoiceBox.getValue()));
+        productsInStore.setItems(productsInfo);
     }
 
     @FXML private void initialize(){
         ObservableList<String> productTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
+        ObservableList<String> stores = FXCollections.observableArrayList(dbHandler.getAllStores());
+
         productTypesChoiceBox.setItems(productTypes);
         productTypesChoiceBox.setValue(productTypes.get(0));
+
+        storesChoiceBox.setItems(stores);
+        storesChoiceBox.setValue(stores.get(0));
     }
 }
