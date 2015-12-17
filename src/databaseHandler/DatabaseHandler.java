@@ -5,10 +5,11 @@ import net.ucanaccess.jdbc.UcanaccessSQLException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DatabaseHandler {
     static protected Connection con;
-    private String URL = "jdbc:ucanaccess://DatalagringV6.accdb";
+    private String URL = "jdbc:ucanaccess://DatalagringV7.1.accdb";
     private String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     private String userID = "";
     private String password = "";
@@ -91,8 +92,8 @@ public class DatabaseHandler {
      * @throws UcanaccessSQLException
      */
     public boolean registerNewUser(UserData userData) throws SQLException, IllegalArgumentException, UcanaccessSQLException{
-        String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr) " +
-                "VALUES( ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr, kortNr) " +
+                "VALUES( ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = con.prepareStatement(query);
         statement.setString(1, userData.getPnr());
@@ -100,7 +101,8 @@ public class DatabaseHandler {
         statement.setString(3, userData.getEnamn());
         statement.setString(4, userData.getGadress());
         statement.setString(5, userData.getPostort());
-        statement.setInt(6, userData.getPostnr());
+        statement.setInt(6, Integer.parseInt(userData.getPostnr()));
+        statement.setString(7, Integer.toString(generateNumber()));
 
         int rs = statement.executeUpdate();
         con.commit();
@@ -162,5 +164,10 @@ public class DatabaseHandler {
         }
 
         return productsInfo;
+    }
+
+    private int generateNumber(){
+        Random random = new Random();
+        return 10000000 + random.nextInt(9999999);
     }
 }

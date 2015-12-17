@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -26,9 +28,9 @@
                <content>
                   <HBox>
                      <children>
-                        <VBox alignment="CENTER" prefWidth="250.0">
+                        <VBox alignment="CENTER" prefWidth="250.0" spacing="5.0">
                            <children>
-                              <ChoiceBox fx:id="productTypesChoiceBox" prefWidth="150.0" />
+                              <ChoiceBox fx:id="productTypesChoiceBox" prefHeight="37.0" prefWidth="235.0" />
                               <Button mnemonicParsing="false" onAction="#showAllBrandsByProductType" text="Show brands" />
                            </children>
                         </VBox>
@@ -39,36 +41,60 @@
             </Tab>
             <Tab text="Add new customer">
                <content>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <GridPane alignment="CENTER" hgap="10.0" prefHeight="311.0" prefWidth="560.0">
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="220.0" />
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="220.0" />
+                      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="220.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    </rowConstraints>
                      <children>
-                        <Label text="Personnummer" />
-                        <TextField fx:id="pnr" />
-                        <Label text="Förnamn" />
-                        <TextField fx:id="fnamn" />
-                        <Label text="Efternamn" />
-                        <TextField fx:id="enamn" />
-                        <Label text="Gatuadress" />
-                        <TextField fx:id="gadress" />
-                        <Label text="Postort" />
-                        <TextField fx:id="postort" />
-                        <Label text="Postnummer" />
-                        <TextField fx:id="postnr" />
-                        <Label text="Telefon" />
-                        <TextField fx:id="telefon" />
-                        <Label text="Email" />
-                        <TextField fx:id="email" />
-                        <Button mnemonicParsing="false" onAction="#addNewCustomer" text="Registrera" />
+                        <Label prefHeight="25.0" prefWidth="148.0" text="Social-sec number" GridPane.rowIndex="2" />
+                        <TextField fx:id="pnr" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="36.0" prefWidth="220.0" text="Registrera" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="telefon" GridPane.rowIndex="9" />
+                        <Label text="Telefon" GridPane.rowIndex="8" />
+                        <TextField fx:id="postnr" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="ZIP code" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="postort" GridPane.rowIndex="7" />
+                        <Label text="City" GridPane.rowIndex="6" />
+                        <Label text="Address" GridPane.rowIndex="4" />
+                        <TextField fx:id="enamn" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label text="Secondname" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="fnamn" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label prefHeight="25.0" prefWidth="113.0" text="Firstname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label id="header" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="250.0" text="Register new customer" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="gadress" maxWidth="442.0" prefHeight="25.0" prefWidth="442.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
                      </children>
-                  </VBox>
+                  </GridPane>
                </content>
             </Tab>
             <Tab text="Products in store">
                <content>
                   <HBox>
                      <children>
-                        <VBox alignment="CENTER" prefWidth="250.0">
+                        <VBox alignment="CENTER" prefWidth="250.0" spacing="5.0">
                            <children>
-                              <ChoiceBox fx:id="storesChoiceBox" prefWidth="150.0" />
+                              <ChoiceBox fx:id="storesChoiceBox" prefHeight="37.0" prefWidth="235.0" />
                               <Button mnemonicParsing="false" onAction="#showProductsByStore" text="Show products" />
                            </children>
                         </VBox>

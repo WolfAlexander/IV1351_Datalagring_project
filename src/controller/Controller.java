@@ -57,33 +57,47 @@ public class Controller {
         }
     }
 
-
+    /**
+     * This method is called when ShowAllProductTypes button is clicked
+     * This method gets calls database handler to get all product types from database
+     * and outputs result in a list view
+     */
     @FXML
     public void showAllProductTypes(){
+        resetMessageToUser();
         ObservableList<String> allProductTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
         productTypesListView.setItems(allProductTypes);
     }
 
+    /**
+     * This method is called when ShowBrands button is clicked
+     * This method gets list of brands by product type from database handler
+     * and outputs it in the list view for brands
+     */
     @FXML
     public void showAllBrandsByProductType(){
+        resetMessageToUser();
         ObservableList<String> brands = FXCollections.observableArrayList(dbHandler.getBrandsByProductType(productTypesChoiceBox.getValue()));
         brandsListView.setItems(brands);
     }
 
+    /**
+     * This method
+     */
     @FXML
     public void addNewCustomer(){
+        resetMessageToUser();
         UserData userData = new UserData(pnr.getText(), fnamn.getText(), enamn.getText(),
-                gadress.getText(), postort.getText(), Integer.parseInt(postnr.getText()), telefon.getText(), email.getText());
+                gadress.getText(), postort.getText(), postnr.getText(), telefon.getText(), email.getText());
         try {
             if (dbHandler.registerNewUser(userData))
                 messageToUser.setText("New user is successfully registered!");
             else
                 messageToUser.setText("No");
         }catch(UcanaccessSQLException ex){
-            ex.printStackTrace();
             messageToUser.setText("Your input is incorrect - it does not match database requirements!");
         }catch(SQLException ex) {
-            messageToUser.setText("Unable to register user right now! Try again!");
+            messageToUser.setText("Unable to register new user right now! Try again!");
         }catch (IllegalArgumentException argEx){
             messageToUser.setText(argEx.getMessage());
         }
@@ -91,8 +105,15 @@ public class Controller {
 
     @FXML
     public void showProductsByStore(){
+        resetMessageToUser();
         ObservableList<String> productsInfo = FXCollections.observableArrayList(dbHandler.getProductsInfoByStore(storesChoiceBox.getValue()));
         productsInStore.setItems(productsInfo);
+        if(productsInfo.size() == 0)
+            messageToUser.setText("No results found!");
+    }
+
+    private void resetMessageToUser(){
+        messageToUser.setText("");
     }
 
     @FXML private void initialize(){

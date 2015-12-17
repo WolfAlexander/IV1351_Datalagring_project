@@ -6,12 +6,16 @@
 }
 
 .text-field{
-    -fx-max-width: 400;
+    -fx-max-width: 500;
     -fx-border-insets: 5;
 }
 
 .label{
     -fx-font-size: 12pt;
+}
+
+#header{
+    -fx-font-size: 20;
 }
 
 .button{

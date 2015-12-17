@@ -10,18 +10,25 @@ public class CheckInput {
      */
     public static void checkUserDataInput(UserData userData) throws IllegalArgumentException{
         checkPnr(userData.getPnr());
-        checkIfOnlyString(userData.getEnamn());
-        checkIfOnlyString(userData.getFnamn());
-        checkIfOnlyString(userData.getPostort());
+        checkIfOnlyString(userData.getEnamn(), "Firstname");
+        checkIfOnlyString(userData.getFnamn(), "Secondname");
+        checkIfOnlyString(userData.getPostort(), "City");
     }
 
     private static void checkPnr(String pnr) throws IllegalArgumentException{
+        if(pnr.isEmpty())
+            throw new IllegalArgumentException("Field 'Social-sec number' cannot be empty!");
         String firstPattern = "";
         String secondPattern = "";
     }
 
-    private static void checkIfOnlyString(String string) throws IllegalArgumentException{
-        String pattern = "";
+    private static void checkIfOnlyString(String string, String fieldName) throws IllegalArgumentException{
+        String onlyStringRegex = "[^0-9]+";
+        if(string.isEmpty())
+            throw new IllegalArgumentException();
+
+        if(!string.matches(onlyStringRegex))
+            throw new IllegalArgumentException("Field " + fieldName + " contains illegal characters. Only string are ");
     }
 
     private static void checkIfValidEmail(String email) throws IllegalArgumentException{

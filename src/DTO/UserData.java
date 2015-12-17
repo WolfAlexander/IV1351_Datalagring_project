@@ -1,10 +1,9 @@
 package DTO;
 
 public class UserData {
-    private String pnr, fnamn, enamn, gadress, postort, telefon, email;
-    private int postnr;
+    private String pnr, fnamn, enamn, gadress, postort, postnr, telefon, email;
 
-    public UserData(String pnr, String fnamn, String enamn, String gadress, String postort, int postnr, String telefon, String email) {
+    public UserData(String pnr, String fnamn, String enamn, String gadress, String postort, String postnr, String telefon, String email) {
         this.pnr = pnr;
         this.fnamn = fnamn;
         this.enamn = enamn;
@@ -35,9 +34,7 @@ public class UserData {
         return postort;
     }
 
-    public int getPostnr() {
-        return postnr;
-    }
+    public String getPostnr() { return postnr; }
 
     public String getTelefon() {
         return telefon;
