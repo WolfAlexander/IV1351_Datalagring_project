@@ -30,6 +30,7 @@
                      <children>
                         <VBox alignment="CENTER" prefWidth="250.0" spacing="5.0">
                            <children>
+                              <Label text="Choose a product type:" />
                               <ChoiceBox fx:id="productTypesChoiceBox" prefHeight="37.0" prefWidth="235.0" />
                               <Button mnemonicParsing="false" onAction="#showAllBrandsByProductType" text="Show brands" />
                            </children>
@@ -62,7 +63,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" />
                     </rowConstraints>
                      <children>
-                        <Label prefHeight="25.0" prefWidth="148.0" text="Social-sec number" GridPane.rowIndex="2" />
+                        <Label prefHeight="25.0" prefWidth="148.0" text="Social-sec number*" GridPane.rowIndex="2" />
                         <TextField fx:id="pnr" GridPane.rowIndex="3" />
                         <Button mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="36.0" prefWidth="220.0" text="Registrera" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                         <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="9" />
@@ -70,20 +71,21 @@
                         <TextField fx:id="telefon" GridPane.rowIndex="9" />
                         <Label text="Telefon" GridPane.rowIndex="8" />
                         <TextField fx:id="postnr" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label text="ZIP code" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="ZIP code*" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField fx:id="postort" GridPane.rowIndex="7" />
-                        <Label text="City" GridPane.rowIndex="6" />
-                        <Label text="Address" GridPane.rowIndex="4" />
+                        <Label text="City*" GridPane.rowIndex="6" />
+                        <Label text="Address*" GridPane.rowIndex="4" />
                         <TextField fx:id="enamn" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label text="Secondname" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label prefHeight="25.0" prefWidth="107.0" text="Secondname*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <TextField fx:id="fnamn" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label prefHeight="25.0" prefWidth="113.0" text="Firstname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label prefHeight="25.0" prefWidth="113.0" text="Firstname*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label id="header" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="250.0" text="Register new customer" GridPane.columnIndex="1">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
                         <TextField fx:id="gadress" maxWidth="442.0" prefHeight="25.0" prefWidth="442.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                        <Label text="* = field has to be filled" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                      </children>
                   </GridPane>
                </content>
@@ -94,6 +96,7 @@
                      <children>
                         <VBox alignment="CENTER" prefWidth="250.0" spacing="5.0">
                            <children>
+                              <Label text="Choose a store:" />
                               <ChoiceBox fx:id="storesChoiceBox" prefHeight="37.0" prefWidth="235.0" />
                               <Button mnemonicParsing="false" onAction="#showProductsByStore" text="Show products" />
                            </children>

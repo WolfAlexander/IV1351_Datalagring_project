@@ -82,7 +82,9 @@ public class Controller {
     }
 
     /**
-     * This method
+     * This method is called when Register button is clicked
+     * This method will send data that user entered to database handler
+     * and output message to user depending on if registration went well or not
      */
     @FXML
     public void addNewCustomer(){
@@ -90,19 +92,23 @@ public class Controller {
         UserData userData = new UserData(pnr.getText(), fnamn.getText(), enamn.getText(),
                 gadress.getText(), postort.getText(), postnr.getText(), telefon.getText(), email.getText());
         try {
-            if (dbHandler.registerNewUser(userData))
-                messageToUser.setText("New user is successfully registered!");
-            else
-                messageToUser.setText("No");
-        }catch(UcanaccessSQLException ex){
-            messageToUser.setText("Your input is incorrect - it does not match database requirements!");
+            int cardNr = dbHandler.registerNewUser(userData);
+            if (cardNr != 0) {
+                messageToUser.setText("New customer is successfully registered! Card number: " + cardNr);
+                emptyAllInputFields();
+            }else
+                messageToUser.setText("Could not add new customer - your input may not match database requirements!");
         }catch(SQLException ex) {
-            messageToUser.setText("Unable to register new user right now! Try again!");
-        }catch (IllegalArgumentException argEx){
-            messageToUser.setText(argEx.getMessage());
+            messageToUser.setText("Unable to register new user right now! Please try again.");
+        }catch (IllegalArgumentException ex){
+            messageToUser.setText(ex.getMessage());
         }
     }
 
+    /**
+     * This method is called when ShowProductsByStore button is clicked
+     * This method will call databasehandler and output result of database answer
+     */
     @FXML
     public void showProductsByStore(){
         resetMessageToUser();
@@ -114,6 +120,17 @@ public class Controller {
 
     private void resetMessageToUser(){
         messageToUser.setText("");
+    }
+
+    private void emptyAllInputFields(){
+        pnr.setText("");
+        fnamn.setText("");
+        enamn.setText("");
+        gadress.setText("");
+        postort.setText("");
+        postnr.setText("");
+        telefon.setText("");
+        email.setText("");
     }
 
     @FXML private void initialize(){

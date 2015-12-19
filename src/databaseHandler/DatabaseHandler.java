@@ -2,14 +2,14 @@ package databaseHandler;
 
 import DTO.UserData;
 import net.ucanaccess.jdbc.UcanaccessSQLException;
-
+import util.CheckInput;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class DatabaseHandler {
     static protected Connection con;
-    private String URL = "jdbc:ucanaccess://DatalagringV7.1.accdb";
+    private String URL = "jdbc:ucanaccess://DatalagringV8.1.accdb";
     private String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     private String userID = "";
     private String password = "";
@@ -86,12 +86,12 @@ public class DatabaseHandler {
     /**
      * This method inserts new user into database
      * @param userData is user information of type DTO.UserData
-     * @return boolean true if user is successfully added
-     * @throws SQLException if an something wrong happend
-     * @throws IllegalArgumentException
-     * @throws UcanaccessSQLException
+     * @return int 0 if user is not added or card number if user successfully added
+     * @throws SQLException if an sql error happened
+     * @throws IllegalArgumentException can be thrown any field input do not pass util.CheckInput validation
      */
-    public boolean registerNewUser(UserData userData) throws SQLException, IllegalArgumentException, UcanaccessSQLException{
+    public int registerNewUser(UserData userData) throws SQLException, IllegalArgumentException, UcanaccessSQLException{
+        CheckInput.checkUserDataInput(userData);
         String query = "INSERT INTO Medlem(pnr, fnamn, enamn, gaddress, postOrt, postNr, kortNr) " +
                 "VALUES( ?, ?, ?, ?, ?, ?, ?)";
 
@@ -102,15 +102,18 @@ public class DatabaseHandler {
         statement.setString(4, userData.getGadress());
         statement.setString(5, userData.getPostort());
         statement.setInt(6, Integer.parseInt(userData.getPostnr()));
-        statement.setString(7, Integer.toString(generateNumber()));
+        int cardNr = generateNumber();
+        statement.setString(7, Integer.toString(cardNr));
 
         int rs = statement.executeUpdate();
+
         con.commit();
         statement.close();
 
-        if(rs >= 1)
-            return true;
-        return false;
+        if(rs == 1)
+            rs = cardNr;
+
+        return rs;
     }
 
     /**
@@ -142,21 +145,21 @@ public class DatabaseHandler {
      */
     public ArrayList<String> getProductsInfoByStore(String store){
         ArrayList<String> productsInfo = new ArrayList<String>();
-        String query = "SELECT Paket.produkt, Paket.storlek, Enhet.namn, PaketStatus.antal\n" +
-                "FROM Paket, Butik, PaketStatus, Produkt, Enhet\n" +
+        String query = "SELECT Marke.namn, Paket.produkt, Paket.storlek, Enhet.namn, PaketStatus.antal\n" +
+                "FROM Marke, Paket, Butik, PaketStatus, Produkt, Enhet\n" +
                 "WHERE Butik.namn = ?\n" +
                 "AND Butik.butikID = PaketStatus.butik\n" +
                 "AND PaketStatus.paket = Paket.streckkod\n" +
                 "AND Paket.produkt = Produkt.namn\n" +
-                "AND Enhet.enhetID = Produkt.enhet";
-
+                "AND Enhet.enhetID = Produkt.enhet " +
+                "AND Paket.marke = Marke.markeID ORDER BY Marke.namn";
         try{
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, store);
             ResultSet rs = statement.executeQuery();
 
             while(rs.next())
-                productsInfo.add(rs.getString("produkt") + " " + rs.getString("storlek").replace("E0", "") + " " + rs.getString("namn") + " has current amount " + rs.getString("antal"));
+                productsInfo.add(rs.getString("Marke.namn") + " " + rs.getString("produkt") + " " + rs.getString("storlek").replace("E0", "") + " " + rs.getString("Enhet.namn") + " has current amount " + rs.getString("antal"));
 
             statement.close();
         }catch (SQLException ex){
