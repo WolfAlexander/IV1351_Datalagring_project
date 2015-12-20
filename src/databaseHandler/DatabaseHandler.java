@@ -24,7 +24,7 @@ public class DatabaseHandler {
             con = DriverManager.getConnection(URL, userID, password);
             con.setAutoCommit(false);
         } catch (Exception e){
-            e.printStackTrace();
+
             return false;
         }
         return true;

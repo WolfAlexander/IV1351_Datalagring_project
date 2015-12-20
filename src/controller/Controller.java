@@ -26,13 +26,16 @@ public class Controller {
     @FXML ListView<String> productsInStore;
     @FXML ChoiceBox<String> storesChoiceBox;
     @FXML Label messageToUser;
+    private String errorBeforeView = "";
 
     /**
      * Controller constructor
      */
     public Controller(){
         dbHandler = new DatabaseHandler();
-        dbHandler.connect();
+        if(!dbHandler.connect())
+            errorBeforeView = "Could not find database!";
+
     }
 
     /**
@@ -64,8 +67,12 @@ public class Controller {
     @FXML
     public void showAllProductTypes(){
         resetMessageToUser();
-        ObservableList<String> allProductTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
-        productTypesListView.setItems(allProductTypes);
+        try {
+            ObservableList<String> allProductTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
+            productTypesListView.setItems(allProductTypes);
+        }catch (NullPointerException ex){
+            messageToUser.setText(errorBeforeView);
+        }
     }
 
     /**
@@ -76,8 +83,12 @@ public class Controller {
     @FXML
     public void showAllBrandsByProductType(){
         resetMessageToUser();
+        try {
         ObservableList<String> brands = FXCollections.observableArrayList(dbHandler.getBrandsByProductType(productTypesChoiceBox.getValue()));
         brandsListView.setItems(brands);
+        }catch (NullPointerException ex){
+            messageToUser.setText(errorBeforeView);
+        }
     }
 
     /**
@@ -101,6 +112,8 @@ public class Controller {
             messageToUser.setText("Unable to register new user right now! Please try again.");
         }catch (IllegalArgumentException ex){
             messageToUser.setText(ex.getMessage());
+        }catch (NullPointerException ex){
+            messageToUser.setText(errorBeforeView);
         }
     }
 
@@ -111,10 +124,14 @@ public class Controller {
     @FXML
     public void showProductsByStore(){
         resetMessageToUser();
-        ObservableList<String> productsInfo = FXCollections.observableArrayList(dbHandler.getProductsInfoByStore(storesChoiceBox.getValue()));
-        productsInStore.setItems(productsInfo);
-        if(productsInfo.size() == 0)
-            messageToUser.setText("No results found!");
+        try{
+            ObservableList<String> productsInfo = FXCollections.observableArrayList(dbHandler.getProductsInfoByStore(storesChoiceBox.getValue()));
+            productsInStore.setItems(productsInfo);
+            if(productsInfo.size() == 0)
+                messageToUser.setText("No results found!");
+        }catch (NullPointerException ex){
+            messageToUser.setText(errorBeforeView);
+        }
     }
 
     private void resetMessageToUser(){
@@ -133,13 +150,17 @@ public class Controller {
     }
 
     @FXML private void initialize(){
-        ObservableList<String> productTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
-        ObservableList<String> stores = FXCollections.observableArrayList(dbHandler.getAllStores());
+        try {
+            ObservableList<String> productTypes = FXCollections.observableArrayList(dbHandler.getAllProductTypes());
+            ObservableList<String> stores = FXCollections.observableArrayList(dbHandler.getAllStores());
 
-        productTypesChoiceBox.setItems(productTypes);
-        productTypesChoiceBox.setValue(productTypes.get(0));
+            productTypesChoiceBox.setItems(productTypes);
+            productTypesChoiceBox.setValue(productTypes.get(0));
 
-        storesChoiceBox.setItems(stores);
-        storesChoiceBox.setValue(stores.get(0));
+            storesChoiceBox.setItems(stores);
+            storesChoiceBox.setValue(stores.get(0));
+        }catch (Exception ex){
+            messageToUser.setText(errorBeforeView);
+        }
     }
 }
