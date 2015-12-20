@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class DatabaseHandler {
     static protected Connection con;
-    private String URL = "jdbc:ucanaccess://DatalagringV8.1.accdb";
+    private String URL = "jdbc:ucanaccess://DatalagringV8.5.accdb";
     private String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     private String userID = "";
     private String password = "";

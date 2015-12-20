@@ -2,6 +2,10 @@ package util;
 
 import DTO.UserData;
 
+/**
+ * CheckInput class check if input from user is valid
+ * NOT NECESSARY FOR THIS ASSIGNMENT
+ */
 public class CheckInput {
     /**
      * This method checks if input from user is a valid one
