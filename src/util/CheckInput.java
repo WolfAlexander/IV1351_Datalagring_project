@@ -26,7 +26,7 @@ public class CheckInput {
         String pnrPattern = "^[1|2][0|9][0-9][0-9][0|1][0-9][0-3][0-9][0-9]{4}$"; //Needs more work(31+ is possible)
 
         if(!pnr.matches(pnrPattern))
-            throw new IllegalArgumentException("Invalid social-sec number! Try again!");
+            throw new IllegalArgumentException("Invalid social-sec number! Social-sec number should have 12 digits: for example: 195105282123.");
     }
 
     private static void checkIfOnlyString(String string, String fieldName) throws IllegalArgumentException{
